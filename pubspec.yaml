@@ -1,0 +1,9 @@
+name: gdrive_update
+description: A commandline tool to update files on google drive
+
+dependencies:
+    googleapis: any
+    googleapis_auth: any
+
+dev_dependencies:
+    test: ^1.0.0
