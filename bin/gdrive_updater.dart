@@ -8,6 +8,11 @@ main() async {
 
   GDriveUpdater driveUpdater = new GDriveUpdater(contents);
   await driveUpdater.init();
-  print(await driveUpdater.files());
+
+  var names = await driveUpdater.search();
+  for (var name in names) {
+    print(name);
+  }
+
   driveUpdater.close();
 }

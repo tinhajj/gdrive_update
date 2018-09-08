@@ -31,5 +31,16 @@ class GDrive {
     return fileList.toJson();
   }
 
-  void search() async {}
+  Future<List<String>> search() async {
+    FileList fileList = await fileAPI.list(q: "name contains 'Star'");
+    List<File> files = fileList.files;
+
+    List<String> names = new List();
+
+    for (File file in files) {
+      names.add(file.name);
+    }
+
+    return names;
+  }
 }
