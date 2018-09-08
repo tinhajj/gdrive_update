@@ -16,7 +16,7 @@ class GDrive {
     _credentials = new ServiceAccountCredentials.fromJson(json);
   }
 
-  void init() async {
+  Future<void> init() async {
     client = await clientViaServiceAccount(_credentials, _SCOPES);
     driveAPI = new DriveApi(client);
     fileAPI = driveAPI.files;
