@@ -31,16 +31,10 @@ class GDrive {
     return fileList.toJson();
   }
 
-  Future<List<String>> search() async {
-    FileList fileList = await fileAPI.list(q: "name contains 'Star'");
-    List<File> files = fileList.files;
-
-    List<String> names = new List();
-
-    for (File file in files) {
-      names.add(file.name);
-    }
-
-    return names;
+  Future<List<File>> search(query) async {
+    // The drive is shared with us so we don't have to check if the file is
+    // trashed
+    FileList fileList = await fileAPI.list(q: "name contains '${query}'");
+    return fileList.files;
   }
 }

@@ -9,9 +9,9 @@ main() async {
   GDriveUpdater driveUpdater = new GDriveUpdater(contents);
   await driveUpdater.init();
 
-  var names = await driveUpdater.search();
-  for (var name in names) {
-    print(name);
+  var files = await driveUpdater.search("Man of Tai");
+  for (var file in files) {
+    print(file.name);
   }
 
   driveUpdater.close();
