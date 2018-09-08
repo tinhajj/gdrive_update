@@ -1,8 +1,14 @@
+library gdrive_update;
+
 import 'package:googleapis/drive/v3.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'dart:async';
 
 class GDrive {
-  var _drive;
+  AutoRefreshingAuthClient client;
+  DriveApi driveAPI;
+  FilesResourceApi fileAPI;
+
   var _credentials;
   static const _SCOPES = const [DriveApi.DriveReadonlyScope];
 
@@ -10,13 +16,18 @@ class GDrive {
     _credentials = new ServiceAccountCredentials.fromJson(json);
   }
 
-  GDrive.fromFile(String fileName) {
-    GDrive(fileName);
+  void init() async {
+    client = await clientViaServiceAccount(_credentials, _SCOPES);
+    driveAPI = new DriveApi(client);
+    fileAPI = driveAPI.files;
   }
 
-  init() async {
-    var client = await clientViaServiceAccount(_credentials, _SCOPES);
-    _drive = new DriveApi(client);
-    _drive.comments;
+  void close() {
+    client.close();
+  }
+
+  Future<Map<String, Object>> files() async {
+    FileList fileList = await fileAPI.list();
+    return fileList.toJson();
   }
 }

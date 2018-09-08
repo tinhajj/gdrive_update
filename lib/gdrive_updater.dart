@@ -1,32 +1,16 @@
 library gdrive_update;
 
-import 'package:googleapis/drive/v3.dart';
-import 'package:googleapis_auth/auth_io.dart';
+import 'package:gdrive_update/src/gdrive.dart';
+import 'package:gdrive_update/src/job.dart';
 
-class GDriveUpdater {
-  static const _SCOPES = const [DriveApi.DriveReadonlyScope];
-  var _credentials;
-  DriveApi _drive;
+class GDriveUpdater extends GDrive {
+  List<Job> jobs = new List();
 
-  GDriveUpdate(String json) {
-    _credentials = new ServiceAccountCredentials.fromJson(json);
-  }
+  GDriveUpdater(String json) : super(json);
 
-  createClient() async {
-    var client = await clientViaServiceAccount(_credentials, _SCOPES);
-    _drive = new DriveApi(client);
-  }
+  update() {}
 
-  getFiles() async {
-    var list = await _drive.files
-        .list(includeTeamDriveItems: true, supportsTeamDrives: true);
-    var files = list.files;
+  delete() {}
 
-    var incomplete = list.incompleteSearch;
-    print(incomplete);
-
-    for (var file in files) {
-      print(file.createdTime);
-    }
-  }
+  processJobs() {}
 }
