@@ -10,7 +10,7 @@ class GDrive {
   FilesResourceApi fileAPI;
 
   var _credentials;
-  static const _SCOPES = const [DriveApi.DriveReadonlyScope];
+  static const _SCOPES = const [DriveApi.DriveScope];
 
   GDrive(String json) {
     _credentials = new ServiceAccountCredentials.fromJson(json);
@@ -36,5 +36,14 @@ class GDrive {
     // trashed
     FileList fileList = await fileAPI.list(q: "name contains '${query}'");
     return fileList.files;
+  }
+
+  Future<void> delete(String fileID) async {
+    await fileAPI.delete(fileID);
+    return;
+  }
+
+  Future<File> update(File file, String fileID) async {
+    return await fileAPI.update(file, fileID);
   }
 }
