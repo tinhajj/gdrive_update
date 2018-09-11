@@ -46,4 +46,9 @@ class GDrive {
   Future<File> update(File file, String fileID) async {
     return await fileAPI.update(file, fileID);
   }
+
+  Future<File> updateName(String fileID, String name) async {
+    File patchFile = new File()..name = "name";
+    return await update(patchFile, fileID);
+  }
 }
