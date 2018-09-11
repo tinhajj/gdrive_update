@@ -1,11 +1,24 @@
 import 'dart:async';
 
 class Job {
-  Function task;
+  static int counter = 1;
 
-  Job(this.task) {}
+  Function task;
+  int id;
+  Exception error;
+  StackTrace trace;
+
+  Job(this.task) {
+    this.id = counter;
+    counter++;
+  }
 
   Future<void> run() async {
-    await task();
+    try {
+      await task();
+    } catch (e, s) {
+      error = e;
+      trace = s;
+    }
   }
 }
