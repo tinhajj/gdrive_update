@@ -1,16 +1,27 @@
 library gdrive_update;
 
 import 'package:gdrive_update/src/gdrive.dart';
-import 'package:gdrive_update/src/job.dart';
+import 'package:gdrive_update/src/api_job.dart';
 
 class GDriveUpdater extends GDrive {
-  List<Job> jobs = new List();
+  List<APIJob> jobs = new List();
 
   GDriveUpdater(String json) : super(json);
 
-  void queueUpdate() {}
+  void queueUpdate(String fileID, String name) {
+    APIJob job = new APIJob(
+        "update", fileID, (fileID, name) => updateName(fileID, name));
+    jobs.add(job);
+  }
 
-  void queueDelete() {}
+  void queueDelete(String fileID) {
+    APIJob job = new APIJob("delete", fileID, (fileID) => delete(fileID));
+    jobs.add(job);
+  }
 
-  processJobs() {}
+  processJobs() async {
+    for (APIJob job in jobs) {
+      await job.run();
+    }
+  }
 }
