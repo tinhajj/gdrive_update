@@ -17,7 +17,7 @@ class GDriveUpdater extends GDrive {
     queueSearch(name, results, "folders");
   }
 
-  void queueSearch(String name, Map results, String type) {
+  void queueSearch(String name, Map results, [String type]) {
     APIJob job = new APIJob.search("search", () async {
       List<File> fileList = await search(name, type);
       results[name] = fileList;

@@ -9,6 +9,8 @@ class GDrive {
   DriveApi driveAPI;
   FilesResourceApi fileAPI;
 
+  static const String folderMime = "application/vnd.google-apps.folder";
+
   var _credentials;
   static const _SCOPES = const [DriveApi.DriveScope];
 
@@ -35,15 +37,17 @@ class GDrive {
     // The drive is shared with us so we don't have to check if the file is
     // trashed
     FileList fileList;
+    String query;
 
     if (type == "files") {
-      fileList = await fileAPI.list(
-          q: "name contains '${name}' and mimeType != 'application/vnd.google-apps.folder'");
+      query = "name contains '${name}' and mimeType != '$folderMime'";
+    } else if (type == "folders") {
+      query = "name contains '${name}' mimeType = '$folderMime'";
     } else {
-      fileList = await fileAPI.list(
-          q: "name contains '${name}' mimeType = 'application/vnd.google-apps.folder'");
+      query = "name contains '${name}'";
     }
 
+    fileList = await fileAPI.list(q: query);
     return fileList.files;
   }
 
