@@ -6,10 +6,19 @@ import 'package:gdrive_update/src/api_job.dart';
 
 class GDriveUpdater extends GDrive {
   List<APIJob> jobs = new List();
+  String fileExtension;
 
   GDriveUpdater(String json) : super(json);
 
+  // A string to append to file searches
+  GDriveUpdater.withFileExtension(String json, String this.fileExtension)
+      : super(json);
+
   void queueSearchFiles(String name, Map results) {
+    if (fileExtension != null) {
+      name += fileExtension;
+    }
+
     queueSearch(name, results, "files");
   }
 
