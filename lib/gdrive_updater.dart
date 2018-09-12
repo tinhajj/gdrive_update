@@ -9,9 +9,17 @@ class GDriveUpdater extends GDrive {
 
   GDriveUpdater(String json) : super(json);
 
-  void queueSearch(String name, Map results) {
+  void queueSearchFiles(String name, Map results) {
+    queueSearch(name, results, "files");
+  }
+
+  void queueSearchFolders(String name, Map results) {
+    queueSearch(name, results, "folders");
+  }
+
+  void queueSearch(String name, Map results, String type) {
     APIJob job = new APIJob.search("search", () async {
-      List<File> fileList = await search(name);
+      List<File> fileList = await search(name, type);
       results[name] = fileList;
     });
     jobs.add(job);
@@ -19,12 +27,12 @@ class GDriveUpdater extends GDrive {
 
   void queueUpdate(String fileID, String name) {
     APIJob job = new APIJob(
-        "update", fileID, (fileID, name) => updateName(fileID, name));
+        name, "update", fileID, (fileID, name) => updateName(fileID, name));
     jobs.add(job);
   }
 
-  void queueDelete(String fileID) {
-    APIJob job = new APIJob("delete", fileID, (fileID) => delete(fileID));
+  void queueDelete(String fileID, String name) {
+    APIJob job = new APIJob(name, "delete", fileID, (fileID) => delete(fileID));
     jobs.add(job);
   }
 

@@ -31,10 +31,19 @@ class GDrive {
     return fileList.toJson();
   }
 
-  Future<List<File>> search(name) async {
+  Future<List<File>> search(String name, String type) async {
     // The drive is shared with us so we don't have to check if the file is
     // trashed
-    FileList fileList = await fileAPI.list(q: "name contains '${name}'");
+    FileList fileList;
+
+    if (type == "files") {
+      fileList = await fileAPI.list(
+          q: "name contains '${name}' and mimeType != 'application/vnd.google-apps.folder'");
+    } else {
+      fileList = await fileAPI.list(
+          q: "name contains '${name}' mimeType = 'application/vnd.google-apps.folder'");
+    }
+
     return fileList.files;
   }
 

@@ -10,9 +10,9 @@ main() async {
   await driveUpdater.init();
 
   Map results = new Map();
-  driveUpdater.queueSearch("rarr", results);
-  driveUpdater.queueSearch("man", results);
-  driveUpdater.queueSearch("fat", results);
+  driveUpdater.queueSearchFiles("rarr", results);
+  driveUpdater.queueSearchFiles("man", results);
+  driveUpdater.queueSearchFiles("fat", results);
   await driveUpdater.processJobs();
 
   results.forEach((key, value) {
