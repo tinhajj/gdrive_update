@@ -5,7 +5,8 @@ class Job {
 
   Function task;
   int id;
-  Exception error;
+  Exception exception;
+  Error error;
   StackTrace trace;
 
   Job(this.task) {
@@ -16,7 +17,10 @@ class Job {
   Future<void> run() async {
     try {
       await task();
-    } catch (e, s) {
+    } on Exception catch (e, s) {
+      exception = e;
+      trace = s;
+    } on Error catch (e, s) {
       error = e;
       trace = s;
     }

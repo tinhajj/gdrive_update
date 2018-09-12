@@ -1,5 +1,4 @@
 import 'package:gdrive_update/gdrive_updater.dart';
-import 'package:googleapis/drive/v3.dart' as drive;
 import 'dart:io';
 
 main() async {
@@ -10,15 +9,17 @@ main() async {
   GDriveUpdater driveUpdater = new GDriveUpdater(contents);
   await driveUpdater.init();
 
-  var files = await driveUpdater.search("rar");
+  Map results = new Map();
+  driveUpdater.queueSearch("rarr", results);
+  driveUpdater.queueSearch("man", results);
+  driveUpdater.queueSearch("fat", results);
+  await driveUpdater.processJobs();
 
-  print("Before Update");
-  for (var file in files) {
-    print(file.name);
-    print(file.id);
-  }
-
-  driveUpdater.updateName(files[0].id, 'rarrrr');
+  results.forEach((key, value) {
+    for (var file in value) {
+      print(file.name);
+    }
+  });
 
   driveUpdater.close();
 }
