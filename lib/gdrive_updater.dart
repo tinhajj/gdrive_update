@@ -10,7 +10,7 @@ class GDriveUpdater extends GDrive {
 
   GDriveUpdater(String json) : super(json);
 
-  // A string to append to file searches
+  // A string to append to file searches & files updates
   GDriveUpdater.withFileExtension(String json, String this.fileExtension)
       : super(json);
 
@@ -35,6 +35,10 @@ class GDriveUpdater extends GDrive {
   }
 
   void queueUpdate(String fileID, String name) {
+    if (fileExtension != null) {
+      name += fileExtension;
+    }
+
     APIJob job = new APIJob(
         name, "update", fileID, (fileID, name) => updateName(fileID, name));
     jobs.add(job);

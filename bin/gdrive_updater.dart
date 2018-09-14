@@ -6,13 +6,15 @@ main() async {
   // Put the whole file in a single string.
   var contents = await config.readAsString();
 
-  GDriveUpdater driveUpdater = new GDriveUpdater(contents);
+  GDriveUpdater driveUpdater =
+      new GDriveUpdater.withFileExtension(contents, ".bin");
   await driveUpdater.init();
 
-  Map results = new Map();
-  driveUpdater.queueSearchFiles("rarr", results);
+  Map<String, List> results = new Map();
+
+  driveUpdater.queueSearchFiles("Jupiter.mkv", results);
+  driveUpdater.queueSearchFiles("cat", results);
   driveUpdater.queueSearchFiles("man", results);
-  driveUpdater.queueSearchFiles("fat", results);
   await driveUpdater.processJobs();
 
   results.forEach((key, value) {

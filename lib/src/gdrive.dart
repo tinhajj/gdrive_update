@@ -42,7 +42,7 @@ class GDrive {
     if (type == "files") {
       query = "name contains '${name}' and mimeType != '$folderMime'";
     } else if (type == "folders") {
-      query = "name contains '${name}' mimeType = '$folderMime'";
+      query = "name contains '${name}' and mimeType = '$folderMime'";
     } else {
       query = "name contains '${name}'";
     }
