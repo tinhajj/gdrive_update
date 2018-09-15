@@ -1,7 +1,13 @@
 import 'package:gdrive_update/gdrive_updater.dart';
+import 'package:gdrive_update/src/file_comparer.dart';
 import 'dart:io';
 
 main() async {
+  FileComparer file =
+      new FileComparer("bin/gdrive_updater.dart", "bin/gdrive_updater.dart");
+  await file.process();
+
+  /*
   var config = File('bin/credentials.json');
   // Put the whole file in a single string.
   var contents = await config.readAsString();
@@ -24,4 +30,5 @@ main() async {
   });
 
   driveUpdater.close();
+  */
 }

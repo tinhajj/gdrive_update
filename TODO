@@ -1,0 +1,9 @@
+File Diff
+  Get something that can compare two files
+  Figure out a format for the two files
+  The thing that compares the two files is going to need to parse out filenames
+
+Keeping Track of failed jobs
+
+Have it work interactively or automatically
+Have it accept if something returns back more than one thing if we should update or skip over
