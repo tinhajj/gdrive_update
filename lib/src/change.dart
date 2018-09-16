@@ -1,20 +1,59 @@
-enum ChangeType { nochange, update, delete }
+abstract class Change {}
 
-class Change {
-  ChangeType type;
-  String name;
+class Update extends Change {
+  String oldFile;
+  String newFile;
 
-  Change.bare() {}
-
-  Change(ChangeType this.type, String this.name) {}
+  Update(String this.oldFile, this.newFile);
+  Update.bare() {}
 
   // Help our test cases along
   bool operator ==(dynamic other) {
-    if (!(other is Change)) {
+    if (!(other is Update)) {
       return false;
     }
 
-    if (this.type == other.type && this.name == other.name) {
+    if (this.oldFile == other.oldFile && this.newFile == other.newFile) {
+      return true;
+    }
+
+    return false;
+  }
+}
+
+class Delete extends Change {
+  String file;
+
+  Delete(String this.file);
+  Delete.bare() {}
+
+  // Help our test cases along
+  bool operator ==(dynamic other) {
+    if (!(other is Delete)) {
+      return false;
+    }
+
+    if (this.file == other.file) {
+      return true;
+    }
+
+    return false;
+  }
+}
+
+class Same extends Change {
+  String file;
+
+  Same(String this.file);
+  Same.bare() {}
+
+  // Help our test cases along
+  bool operator ==(dynamic other) {
+    if (!(other is Same)) {
+      return false;
+    }
+
+    if (this.file == other.file) {
       return true;
     }
 

@@ -29,7 +29,7 @@ class FileComparer {
     // am not sure of an easy way to do that at the moment.  So we have to read
     // in both files into memory.
 
-    List<Change> changes;
+    List<Change> changes = new List();
 
     if (file1.length != file2.length) {
       throw ("Files do not have equal number of lines");
@@ -40,10 +40,20 @@ class FileComparer {
     }
 
     for (var i = 0; i < file1.length; i++) {
-      if (file1[0] == file2[0]) {
-        Change c = new Change(ChangeType.nochange, file1[0]);
-        changes.add(c);
+      var originalLine = file1[i];
+      var newLine = file2[i];
+
+      Change c;
+
+      if (newLine.startsWith("*")) {
+        c = new Delete(originalLine);
+      } else if (originalLine == newLine) {
+        c = new Same(originalLine);
+      } else {
+        c = new Update(originalLine, newLine);
       }
+
+      changes.add(c);
     }
 
     return changes;
