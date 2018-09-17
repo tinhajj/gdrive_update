@@ -1,7 +1,7 @@
 File Diff
   Get something that can compare two files (done)
   Figure out a format for the two files (done)
-  The thing that compares the two files is going to need to parse out filenames
+  The thing that compares the two files is going to need to parse out filenames (done)
 
 Keeping Track of failed jobs
 
