@@ -54,4 +54,21 @@ void main() {
 
     expect(c1, equals(c2));
   });
+
+  test("Processes a mixing of files correctly even when they have paths", () {
+    FileComparer fc = new FileComparer.bare();
+
+    fc.file1 = ["image.jpg", "movie.mkv", "home/username/show.wav", "home\\username\\doc.pdf"];
+    fc.file2 = ["*text.txt", "movie.mkv", "home/username/new_show.wav", "home\\username\\paper.pdf"];
+
+    List<Change> c1 = fc.process();
+    List<Change> c2 = [
+      new Delete("image.jpg"),
+      new Same("movie.mkv"),
+      new Update("show.wav", "new_show.wav"),
+      new Update("doc.pdf", "paper.pdf"),
+    ];
+
+    expect(c1, equals(c2));
+  });
 }

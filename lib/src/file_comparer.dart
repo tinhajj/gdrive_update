@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:gdrive_update/src/change.dart';
 import 'dart:convert';
+import 'package:path/path.dart' as p;
 
 class FileComparer {
   List<String> file1, file2;
@@ -50,7 +51,14 @@ class FileComparer {
       } else if (originalLine == newLine) {
         c = new Same(originalLine);
       } else {
-        c = new Update(originalLine, newLine);
+        String originalFile = p.basename(originalLine);
+        String newFile = p.basename(newLine);
+
+        if (originalFile.length == 0 || newFile.length == 0) {
+          continue;
+        }
+
+        c = new Update(originalFile, newFile);
       }
 
       changes.add(c);
