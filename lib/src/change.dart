@@ -19,6 +19,10 @@ class Update extends Change {
 
     return false;
   }
+
+  String toString() {
+    return "Updating\n  $oldFile to\n  $newFile";
+  }
 }
 
 class Delete extends Change {
@@ -39,6 +43,10 @@ class Delete extends Change {
 
     return false;
   }
+
+  String toString() {
+    return "Deleting\n  $file";
+  }
 }
 
 class Same extends Change {
@@ -58,5 +66,9 @@ class Same extends Change {
     }
 
     return false;
+  }
+
+  String toString() {
+    return "No Change\n  $file";
   }
 }

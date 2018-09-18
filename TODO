@@ -5,5 +5,14 @@ File Diff
 
 Keeping Track of failed jobs
 
-Have it work interactively or automatically
-Have it accept if something returns back more than one thing if we should update or skip over
+Have it work interactively or automatically (not doing this anymore, doing test output instead)
+Have it accept if something returns back more than one thing if we should update or skip over (not doing this)
+
+the app (done)
+  take 3 arguments
+    service account json file with credentials
+    first file
+    second file
+
+  flags
+    test
